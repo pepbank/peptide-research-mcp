@@ -1,0 +1,34 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.pepbank/pepbank",
+  "title": "PepBank Peptide Research MCP: Studies, Clinical Trials and Cited Findings",
+  "description": "Peptide study results, papers and clinical trials, each linked to its source. Not medical advice.",
+  "version": "1.3.0",
+  "websiteUrl": "https://pepbank.io/developers",
+  "repository": {
+    "url": "https://github.com/pepbank/peptide-research-mcp",
+    "source": "github"
+  },
+  "icons": [
+    {
+      "src": "https://pepbank.io/icon-512.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "512x512"
+      ]
+    },
+    {
+      "src": "https://pepbank.io/icon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": [
+        "any"
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://pepbank.io/mcp"
+    }
+  ]
+}
