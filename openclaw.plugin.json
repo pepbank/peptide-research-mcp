@@ -1,0 +1,8 @@
+{
+  "id": "pepbank-peptide-research",
+  "name": "PepBank Peptide Research MCP",
+  "description": "Look up what studies found about more than 160 peptides, such as BPC-157, semaglutide and GHK-Cu. Each result links to its paper and says if it came from people, animals or cells.",
+  "version": "1.0.0",
+  "icon": "https://pepbank.io/icon-512.png",
+  "categories": ["research"]
+}

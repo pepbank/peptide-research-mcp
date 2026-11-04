@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pepbank-peptide-research",
+  "version": "1.0.0",
+  "description": "Look up what studies found about more than 160 peptides, such as BPC-157, semaglutide and GHK-Cu. Each result links to its paper and says if it came from people, animals or cells.",
+  "author": { "name": "PepBank", "url": "https://pepbank.io" },
+  "homepage": "https://pepbank.io/developers",
+  "repository": "https://github.com/pepbank/peptide-research-mcp",
+  "license": "MIT",
+  "keywords": ["peptides", "peptide-research", "pepbank", "clinical-trials", "pubmed", "evidence", "mcp"]
+}
