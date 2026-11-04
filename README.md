@@ -53,23 +53,21 @@ Gemini CLI (`settings.json`):
 
 Other apps: add `https://pepbank.io/mcp` as a remote server with Streamable HTTP.
 
-## Command line and local server
+## Command line and local server (npm)
 
-For apps that need a local (stdio) server, `bin/pepbank.mjs` forwards each request to `https://pepbank.io/mcp`. It needs Node 18 or later and has no dependencies. Clone this repository, then:
+The `pepbank` package runs the same server over stdio for apps that need a local server, and answers from the terminal:
 
 ```
-node bin/pepbank.mjs brief BPC-157
-node bin/pepbank.mjs search tendon healing
-node bin/pepbank.mjs trials GHK-Cu
+npx pepbank brief BPC-157
+npx pepbank search tendon healing
+npx pepbank trials GHK-Cu
 ```
 
-Local server config for MCP apps (use the full path to your clone):
+Local server config for MCP apps:
 
 ```json
-{ "mcpServers": { "pepbank": { "command": "node", "args": ["/path/to/peptide-research-mcp/bin/pepbank.mjs"] } } }
+{ "mcpServers": { "pepbank": { "command": "npx", "args": ["-y", "pepbank"] } } }
 ```
-
-The `Dockerfile` runs the same bridge in a container.
 
 ## Tools
 
