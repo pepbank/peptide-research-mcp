@@ -73,6 +73,7 @@
         ]
       },
       "annotations": {
+        "title": "Resolve peptide name",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -82,7 +83,7 @@
     {
       "name": "get_peptide_brief",
       "title": "Get peptide brief",
-      "description": "The result answers dose questions with studied doses, labelled as study facts, not advice. Return a precomputed summary of one peptide: identity, sequence, checked findings by evidence class, trials, key findings with citations, coverage and notices. regulatory gives approval by place and use, plus sport status. Use this for an overview of a known peptide. Use resolve_peptide first for an unclear name, search_findings for a specific outcome, or compare_peptides for 2 to 5 peptides. Counts and key findings use administered findings only. The key_findings_v0.4 rule excludes method-only outcome groups when other groups have findings. Its order is evidence class, design tier, analysis role, sample size, citations, then newer. coverage.checked_years gives the year span of checked papers. coverage.search_scope_years gives the search scope. Trials counted test the peptide. evidence_summary.trials.other_registry_entries counts entries that only measure or mention it. Notices describe coverage limits. Each finding has an evidence class: human, animal, laboratory or predicted. A count of 0 human findings means no checked human findings within the filters or outcome group. It does not mean that no human study exists. Returned doses are study facts with species, route, design and source. They are not personal doses or dose advice. The data does not support a personal dose calculation.",
+      "description": "For a dose question, use studied_doses together with get_community_practice. Return a precomputed summary of one peptide: identity, sequence, checked findings by evidence class, trials, key findings with citations, coverage and notices. regulatory gives approval by place and use, plus sport status. Use this for an overview of a known peptide. Use resolve_peptide first for an unclear name, search_findings for a specific outcome, or compare_peptides for 2 to 5 peptides. Counts and key findings use administered findings only. The key_findings_v0.4 rule excludes method-only outcome groups when other groups have findings. Its order is evidence class, design tier, analysis role, sample size, citations, then newer. coverage.checked_years gives the year span of checked papers. coverage.search_scope_years gives the search scope. Trials counted test the peptide. evidence_summary.trials.other_registry_entries counts entries that only measure or mention it. Notices describe coverage limits. Each finding has an evidence class: human, animal, laboratory or predicted. A count of 0 human findings means no checked human findings within the filters or outcome group. It does not mean that no human study exists. Returned doses are the doses that studies used, with species, route, design and source.",
       "inputSchema": {
         "type": "object",
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -111,6 +112,42 @@
         ]
       },
       "annotations": {
+        "title": "Get peptide brief",
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "get_community_practice",
+      "title": "Get community practice",
+      "description": "Return what community sources report about how people use one peptide: uses, regimens (route, amount, how often, how long), reported side effects, cautions and regulatory status notes such as US compounding policy, each line with its sources. Community-reported, not tested in trials. Use it for use, dose, cycle and compounding questions, together with studied_doses from get_peptide_brief. Seller pages are never sources. A peptide can have no record. Default compact keeps key lines, and view=\"full\" returns every line.",
+      "inputSchema": {
+        "type": "object",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "peptide": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Peptide name, alias, slug or ID. Examples: BPC-157, semaglutide, PEP-000001."
+          },
+          "view": {
+            "description": "Default compact.",
+            "type": "string",
+            "enum": [
+              "compact",
+              "full"
+            ]
+          }
+        },
+        "required": [
+          "peptide"
+        ]
+      },
+      "annotations": {
+        "title": "Get community practice",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -143,36 +180,67 @@
           },
           "evidence_level": {
             "description": "Evidence level, from checked findings of studies that gave the peptide only: human_rct (a randomized trial in people), human_other (other designs in people), animal, laboratory, predicted or none. A trial, a trial phase or an approval never raises it: use registry_level for those.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "human_rct",
-                "human_other",
-                "animal",
-                "laboratory",
-                "predicted",
-                "none"
-              ]
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "human_rct",
+                  "human_other",
+                  "animal",
+                  "laboratory",
+                  "predicted",
+                  "none"
+                ]
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "human_rct",
+                    "human_other",
+                    "animal",
+                    "laboratory",
+                    "predicted",
+                    "none"
+                  ]
+                }
+              }
+            ]
           },
           "registry_level": {
             "description": "Registry level, from registered trials that test the peptide and the curated development phase: approved (somewhere, for some use), phase_4, phase_3, phase_2, phase_1, registered (a trial exists, no phase on record) or none. It says nothing about results.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "approved",
-                "phase_4",
-                "phase_3",
-                "phase_2",
-                "phase_1",
-                "registered",
-                "none"
-              ]
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "approved",
+                  "phase_4",
+                  "phase_3",
+                  "phase_2",
+                  "phase_1",
+                  "registered",
+                  "none"
+                ]
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "approved",
+                    "phase_4",
+                    "phase_3",
+                    "phase_2",
+                    "phase_1",
+                    "registered",
+                    "none"
+                  ]
+                }
+              }
+            ]
           },
           "featured": {
             "description": "Only peptides on the curated launch list.",
@@ -214,6 +282,7 @@
         }
       },
       "annotations": {
+        "title": "Search peptides",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -223,7 +292,7 @@
     {
       "name": "search_findings",
       "title": "Search findings",
-      "description": "Return checked findings with exact total_count and source sentences in included.passages. Each finding is one claim from one paper. Use this for specific outcomes, with filters for peptide, evidence class, design, claim type, peptide role, direction, outcome group, body system and year. Use search_publications instead for paper discovery, or get_peptide_brief for an overview. Each finding has an evidence class: human, animal, laboratory or predicted. A count of 0 human findings means no checked human findings within the filters or outcome group. It does not mean that no human study exists. Each finding has claim.peptide_role. administered means the study gave the peptide. endogenous_level means the study measured the body's own peptide, for example after vitamin D. Those measurements are not evidence about taking the peptide. The peptide_role=administered filter selects studies that gave it. included.publications supplies each source PMID or DOI for citation. complete is true only on the last page. Returned doses are study facts with species, route, design and source. They are not personal doses or dose advice. The data does not support a personal dose calculation.",
+      "description": "Return checked findings with exact total_count and source sentences in included.passages. Each finding is one claim from one paper. Use this for specific outcomes, with filters for peptide, evidence class, design, claim type, peptide role, direction, outcome group, body system and year. Use search_publications instead for paper discovery, or get_peptide_brief for an overview. Each finding has an evidence class: human, animal, laboratory or predicted. A count of 0 human findings means no checked human findings within the filters or outcome group. It does not mean that no human study exists. Each finding has claim.peptide_role. administered means the study gave the peptide. endogenous_level means the study measured the body's own peptide, for example after vitamin D. Those measurements are not evidence about taking the peptide. The peptide_role=administered filter selects studies that gave it. included.publications supplies each source PMID or DOI for citation. complete is true only on the last page. Returned doses are the doses that studies used, with species, route, design and source.",
       "inputSchema": {
         "type": "object",
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -242,85 +311,162 @@
           },
           "evidence_class": {
             "description": "One or more of human, animal, laboratory, predicted.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "human",
-                "animal",
-                "laboratory",
-                "predicted"
-              ],
-              "description": "Evidence class: human, animal, laboratory or predicted."
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "human",
+                  "animal",
+                  "laboratory",
+                  "predicted"
+                ],
+                "description": "Evidence class: human, animal, laboratory or predicted."
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "human",
+                    "animal",
+                    "laboratory",
+                    "predicted"
+                  ],
+                  "description": "Evidence class: human, animal, laboratory or predicted."
+                }
+              }
+            ]
           },
           "design": {
             "description": "Study design, for example randomized_controlled_trial or animal_in_vivo.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "systematic_review",
-                "randomized_controlled_trial",
-                "non_randomized_trial",
-                "observational_study",
-                "case_report_or_series",
-                "animal_in_vivo",
-                "ex_vivo_tissue",
-                "in_vitro_cell",
-                "in_vitro_cell_free",
-                "in_silico",
-                "other"
-              ]
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "systematic_review",
+                  "randomized_controlled_trial",
+                  "non_randomized_trial",
+                  "observational_study",
+                  "case_report_or_series",
+                  "animal_in_vivo",
+                  "ex_vivo_tissue",
+                  "in_vitro_cell",
+                  "in_vitro_cell_free",
+                  "in_silico",
+                  "other"
+                ]
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "systematic_review",
+                    "randomized_controlled_trial",
+                    "non_randomized_trial",
+                    "observational_study",
+                    "case_report_or_series",
+                    "animal_in_vivo",
+                    "ex_vivo_tissue",
+                    "in_vitro_cell",
+                    "in_vitro_cell_free",
+                    "in_silico",
+                    "other"
+                  ]
+                }
+              }
+            ]
           },
           "claim_type": {
             "description": "efficacy_outcome, safety_outcome, pharmacokinetics, activity_measurement, mechanism or other.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "efficacy_outcome",
-                "safety_outcome",
-                "pharmacokinetics",
-                "activity_measurement",
-                "mechanism",
-                "other"
-              ]
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "efficacy_outcome",
+                  "safety_outcome",
+                  "pharmacokinetics",
+                  "activity_measurement",
+                  "mechanism",
+                  "other"
+                ]
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "efficacy_outcome",
+                    "safety_outcome",
+                    "pharmacokinetics",
+                    "activity_measurement",
+                    "mechanism",
+                    "other"
+                  ]
+                }
+              }
+            ]
           },
           "peptide_role": {
             "description": "Role of the peptide in the study: administered (the study gave the peptide), endogenous_level (the study measured the body's own peptide) or other. Without this filter, every role is returned and each finding carries claim.peptide_role. Use administered for questions about taking the peptide.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "administered",
-                "endogenous_level",
-                "other"
-              ],
-              "description": "Role of the peptide in the study: administered, endogenous_level or other."
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "administered",
+                  "endogenous_level",
+                  "other"
+                ],
+                "description": "Role of the peptide in the study: administered, endogenous_level or other."
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "administered",
+                    "endogenous_level",
+                    "other"
+                  ],
+                  "description": "Role of the peptide in the study: administered, endogenous_level or other."
+                }
+              }
+            ]
           },
           "direction": {
             "description": "Reported direction of the effect.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "increase",
-                "decrease",
-                "no_significant_change",
-                "mixed",
-                "not_applicable",
-                "not_reported"
-              ]
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "increase",
+                  "decrease",
+                  "no_significant_change",
+                  "mixed",
+                  "not_applicable",
+                  "not_reported"
+                ]
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "increase",
+                    "decrease",
+                    "no_significant_change",
+                    "mixed",
+                    "not_applicable",
+                    "not_reported"
+                  ]
+                }
+              }
+            ]
           },
           "outcome_group": {
             "description": "Outcome group, matched exactly, for example Wound healing or Body weight. get_evidence_map lists the outcome groups of a peptide.",
@@ -412,6 +558,7 @@
         }
       },
       "annotations": {
+        "title": "Search findings",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -440,24 +587,44 @@
           },
           "design": {
             "description": "Filter by design_hint: the PubMed publication-type tag of the paper, not checked. One of meta_analysis, systematic_review, rct, clinical_trial, observational, case_report, review, animal, in_vitro, preprint, other. For the design of the checked findings, read profile in the results.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "meta_analysis",
-                "systematic_review",
-                "rct",
-                "clinical_trial",
-                "observational",
-                "case_report",
-                "review",
-                "animal",
-                "in_vitro",
-                "preprint",
-                "other"
-              ]
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "meta_analysis",
+                  "systematic_review",
+                  "rct",
+                  "clinical_trial",
+                  "observational",
+                  "case_report",
+                  "review",
+                  "animal",
+                  "in_vitro",
+                  "preprint",
+                  "other"
+                ]
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "meta_analysis",
+                    "systematic_review",
+                    "rct",
+                    "clinical_trial",
+                    "observational",
+                    "case_report",
+                    "review",
+                    "animal",
+                    "in_vitro",
+                    "preprint",
+                    "other"
+                  ]
+                }
+              }
+            ]
           },
           "extraction_status": {
             "description": "extracted = layer 1 (checked findings). queued or stored_only = layer 2 (not checked).",
@@ -470,19 +637,34 @@
           },
           "status": {
             "description": "Publication status, for example retracted.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "active",
-                "corrected",
-                "expression_of_concern",
-                "retracted",
-                "withdrawn",
-                "removed_from_source"
-              ]
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "active",
+                  "corrected",
+                  "expression_of_concern",
+                  "retracted",
+                  "withdrawn",
+                  "removed_from_source"
+                ]
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "active",
+                    "corrected",
+                    "expression_of_concern",
+                    "retracted",
+                    "withdrawn",
+                    "removed_from_source"
+                  ]
+                }
+              }
+            ]
           },
           "open_access": {
             "description": "Only open-access papers when true.",
@@ -544,6 +726,7 @@
         }
       },
       "annotations": {
+        "title": "Search publications",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -553,7 +736,7 @@
     {
       "name": "search_trials",
       "title": "Search clinical trials",
-      "description": "Return registered clinical trials with registry status, phase, posted-results status and peptide role. Use this for clinical development and trial records. Use search_findings instead for checked study results, or get_record for one full trial. The default role=tests lists and counts trials that test the peptide. role=measures and role=mentions return entries that only measure or name it. role=all includes every role. Those entries are not trials of taking the peptide. other_registry_entries signals their presence. Registration alone is not evidence of an effect. has_results identifies posted results.",
+      "description": "Return registered clinical trials with registry status, phase, posted-results status and peptide role. Use this for clinical development and trial records. Use search_findings instead for checked study results, or get_record for one full trial. The default role=tests lists and counts trials that test the peptide. role=measures and role=mentions return entries that only measure or name it. role=all includes every role. Those entries are not trials of taking the peptide. other_registry_entries signals their presence. Registration alone is not evidence of an effect. has_results identifies posted results. view=list gives a full trial list with up to 100 rows per page.",
       "inputSchema": {
         "type": "object",
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -572,43 +755,81 @@
           },
           "status": {
             "description": "Registry status, for example RECRUITING or COMPLETED.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "ACTIVE_NOT_RECRUITING",
-                "COMPLETED",
-                "ENROLLING_BY_INVITATION",
-                "NOT_YET_RECRUITING",
-                "RECRUITING",
-                "SUSPENDED",
-                "TERMINATED",
-                "WITHDRAWN",
-                "AVAILABLE",
-                "NO_LONGER_AVAILABLE",
-                "TEMPORARILY_NOT_AVAILABLE",
-                "APPROVED_FOR_MARKETING",
-                "WITHHELD",
-                "UNKNOWN"
-              ]
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ACTIVE_NOT_RECRUITING",
+                  "COMPLETED",
+                  "ENROLLING_BY_INVITATION",
+                  "NOT_YET_RECRUITING",
+                  "RECRUITING",
+                  "SUSPENDED",
+                  "TERMINATED",
+                  "WITHDRAWN",
+                  "AVAILABLE",
+                  "NO_LONGER_AVAILABLE",
+                  "TEMPORARILY_NOT_AVAILABLE",
+                  "APPROVED_FOR_MARKETING",
+                  "WITHHELD",
+                  "UNKNOWN"
+                ]
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "ACTIVE_NOT_RECRUITING",
+                    "COMPLETED",
+                    "ENROLLING_BY_INVITATION",
+                    "NOT_YET_RECRUITING",
+                    "RECRUITING",
+                    "SUSPENDED",
+                    "TERMINATED",
+                    "WITHDRAWN",
+                    "AVAILABLE",
+                    "NO_LONGER_AVAILABLE",
+                    "TEMPORARILY_NOT_AVAILABLE",
+                    "APPROVED_FOR_MARKETING",
+                    "WITHHELD",
+                    "UNKNOWN"
+                  ]
+                }
+              }
+            ]
           },
           "phase": {
             "description": "EARLY_PHASE1, PHASE1, PHASE2, PHASE3, PHASE4 or NA.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "EARLY_PHASE1",
-                "PHASE1",
-                "PHASE2",
-                "PHASE3",
-                "PHASE4",
-                "NA"
-              ]
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "EARLY_PHASE1",
+                  "PHASE1",
+                  "PHASE2",
+                  "PHASE3",
+                  "PHASE4",
+                  "NA"
+                ]
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "EARLY_PHASE1",
+                    "PHASE1",
+                    "PHASE2",
+                    "PHASE3",
+                    "PHASE4",
+                    "NA"
+                  ]
+                }
+              }
+            ]
           },
           "has_results": {
             "description": "Only trials with posted results.",
@@ -621,17 +842,30 @@
           },
           "role": {
             "description": "Which registry links count: tests (default: the peptide is among the interventions, so the trial gives it), measures (the peptide is only a measured level or an eligibility term), mentions (named elsewhere in the registry text) or all. Several values are allowed. Only tests are trials of the peptide. Without peptide, a trial needs a link of one of these roles to any peptide.",
-            "maxItems": 50,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "tests",
-                "measures",
-                "mentions",
-                "all"
-              ]
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "tests",
+                  "measures",
+                  "mentions",
+                  "all"
+                ]
+              },
+              {
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "tests",
+                    "measures",
+                    "mentions",
+                    "all"
+                  ]
+                }
+              }
+            ]
           },
           "sort": {
             "description": "phase (default), updated, start or enrollment.",
@@ -656,7 +890,7 @@
             "description": "Opaque cursor from next_cursor of the previous page. Send the same filters again."
           },
           "limit": {
-            "description": "Default 10. Max 25 compact, 10 full.",
+            "description": "Default 100, max 100 for list. Default 10, max 25 compact, 10 full.",
             "type": "integer",
             "minimum": 1,
             "maximum": 100
@@ -666,12 +900,14 @@
             "type": "string",
             "enum": [
               "compact",
-              "full"
+              "full",
+              "list"
             ]
           }
         }
       },
       "annotations": {
+        "title": "Search clinical trials",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -716,6 +952,7 @@
         ]
       },
       "annotations": {
+        "title": "Search live sources",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -748,6 +985,7 @@
         ]
       },
       "annotations": {
+        "title": "Get record",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -782,6 +1020,7 @@
         ]
       },
       "annotations": {
+        "title": "Get evidence map",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -798,14 +1037,24 @@
         "properties": {
           "peptides": {
             "description": "2 to 5 peptide names, slugs or IDs.",
-            "maxItems": 5,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 200,
-              "description": "Peptide name, alias, slug or ID. Examples: BPC-157, semaglutide, PEP-000001."
-            }
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200,
+                "description": "Peptide name, alias, slug or ID. Examples: BPC-157, semaglutide, PEP-000001."
+              },
+              {
+                "maxItems": 5,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200,
+                  "description": "Peptide name, alias, slug or ID. Examples: BPC-157, semaglutide, PEP-000001."
+                }
+              }
+            ]
           },
           "view": {
             "description": "Default compact.",
@@ -821,6 +1070,7 @@
         ]
       },
       "annotations": {
+        "title": "Compare peptides",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -860,6 +1110,7 @@
         }
       },
       "annotations": {
+        "title": "Get changes",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -893,6 +1144,7 @@
         ]
       },
       "annotations": {
+        "title": "Replay query",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -909,6 +1161,7 @@
         "properties": {}
       },
       "annotations": {
+        "title": "Get freshness",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -925,6 +1178,7 @@
         "properties": {}
       },
       "annotations": {
+        "title": "Get my usage",
         "readOnlyHint": true,
         "destructiveHint": false,
         "idempotentHint": true,
@@ -932,5 +1186,5 @@
       }
     }
   ],
-  "version": "1.3.0"
+  "version": "1.5.2"
 }

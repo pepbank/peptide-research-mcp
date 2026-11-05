@@ -3,7 +3,7 @@
   "name": "io.pepbank/pepbank",
   "title": "PepBank Peptide Research MCP: Studies, Clinical Trials and Cited Findings",
   "description": "Peptide study results, papers and clinical trials, each linked to its source. Not medical advice.",
-  "version": "1.3.0",
+  "version": "1.5.2",
   "websiteUrl": "https://pepbank.io/developers",
   "repository": {
     "url": "https://github.com/pepbank/peptide-research-mcp",

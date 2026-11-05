@@ -75,10 +75,11 @@ Local server config for MCP apps:
 |---|---|
 | `resolve_peptide` | Finds the peptide that a name, alias or code means |
 | `get_peptide_brief` | Reads the evidence summary for one peptide, with key findings, trials, studied doses and approval status |
+| `get_community_practice` | Reads what community sources report about how people use one peptide: uses, doses, side effects and cautions, each with its sources. Trials did not test these reports |
 | `search_peptides` | Lists peptides and filters them by name, category or evidence level |
 | `search_findings` | Searches study findings, with the source sentence and the PMID or DOI for each |
 | `search_publications` | Finds papers and shows which ones have checked findings |
-| `search_trials` | Finds registered clinical trials, with status, phase and posted results |
+| `search_trials` | Finds registered clinical trials, with status, phase and posted results. The list view shows up to 100 trials per page |
 | `search_live_sources` | Searches Europe PMC for papers that PepBank does not cover yet. These results are not checked |
 | `get_record` | Reads one full peptide, paper, finding or trial record |
 | `get_evidence_map` | Counts the findings for one peptide by outcome, evidence class and direction |
@@ -116,6 +117,7 @@ npx skills add pepbank/peptide-research-mcp
 - What do studies say about BPC-157 for tendon healing?
 - Are there clinical trials testing GHK-Cu?
 - Compare the evidence for semaglutide and tirzepatide.
+- What doses do people report for BPC-157, and what doses did studies use?
 
 ## Data and credit
 
