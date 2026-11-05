@@ -1,0 +1,10 @@
+{
+  "name": "pepbank",
+  "version": "1.0.0",
+  "description": "Studies and clinical trials for BPC-157, retatrutide, tirzepatide and 160+ peptides, with sources.",
+  "mcpServers": {
+    "pepbank": {
+      "httpUrl": "https://pepbank.io/mcp"
+    }
+  }
+}
