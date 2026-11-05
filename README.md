@@ -1,4 +1,4 @@
-# PepBank Peptide Research MCP: Studies, Clinical Trials and Cited Findings
+# PepBank Peptide Research MCP: BPC-157, Retatrutide and Tirzepatide Studies and Trials
 
 Look up what studies found about more than 160 peptides, such as BPC-157, semaglutide and GHK-Cu. Each result links to its paper and says if it came from people, animals or cells.
 

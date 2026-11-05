@@ -1,9 +1,9 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.pepbank/pepbank",
-  "title": "PepBank Peptide Research MCP: Studies, Clinical Trials and Cited Findings",
-  "description": "Peptide study results, papers and clinical trials, each linked to its source. Not medical advice.",
-  "version": "1.5.2",
+  "title": "PepBank Peptide Research MCP: BPC-157, Retatrutide and Tirzepatide Studies and Trials",
+  "description": "Studies and clinical trials for BPC-157, retatrutide, tirzepatide and 160+ peptides, with sources.",
+  "version": "1.5.3",
   "websiteUrl": "https://pepbank.io/developers",
   "repository": {
     "url": "https://github.com/pepbank/peptide-research-mcp",

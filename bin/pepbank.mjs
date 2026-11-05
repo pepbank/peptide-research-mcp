@@ -3,7 +3,7 @@
 // PepBank MCP server at https://pepbank.io/mcp. No dependencies. Node 18 or later.
 import { createInterface } from "node:readline";
 
-const VERSION = "1.0.0";
+const VERSION = "1.0.1";
 const SERVER = process.env.PEPBANK_MCP_URL || "https://pepbank.io/mcp";
 const HELP = `pepbank ${VERSION}
 Look up what studies found about more than 160 peptides. Each result links to its paper
