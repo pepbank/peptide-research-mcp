@@ -1,6 +1,6 @@
 # PepBank Peptide Research MCP: BPC-157, Retatrutide and Tirzepatide Studies and Trials
 
-Look up what studies found about more than 160 peptides, such as BPC-157, semaglutide and GHK-Cu. Each result links to its paper and says if it came from people, animals or cells.
+Look up what studies found about BPC-157, retatrutide, tirzepatide, GHK-Cu, TB-500 and 160+ other peptides. Each result links to its paper and says if it came from people, animals or cells.
 
 PepBank MCP connects your AI to [PepBank](https://pepbank.io), a database of peptide research. Add it to Claude, ChatGPT, Cursor or another MCP app. Your AI can then find a peptide by name and read a summary of its evidence. It can also search study findings and clinical trials, and compare up to five peptides. Each finding links to the sentence in the paper that supports it and cites its PMID or DOI. Developer guide: [pepbank.io/developers](https://pepbank.io/developers).
 
@@ -116,7 +116,7 @@ npx skills add pepbank/peptide-research-mcp
 
 - What do studies say about BPC-157 for tendon healing?
 - Are there clinical trials testing GHK-Cu?
-- Compare the evidence for semaglutide and tirzepatide.
+- Compare retatrutide and tirzepatide on the evidence for weight loss.
 - What doses do people report for BPC-157, and what doses did studies use?
 
 ## Data and credit
