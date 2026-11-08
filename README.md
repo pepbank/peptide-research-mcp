@@ -119,6 +119,10 @@ npx skills add pepbank/peptide-research-mcp
 - Compare retatrutide and tirzepatide on the evidence for weight loss.
 - What doses do people report for BPC-157, and what doses did studies use?
 
+## Peptide pages on PepBank
+
+Each peptide has its own page with its studies, trials and approval status. For example: [BPC-157](https://pepbank.io/p/bpc-157), [retatrutide](https://pepbank.io/p/retatrutide), [tirzepatide](https://pepbank.io/p/tirzepatide), [GHK-Cu](https://pepbank.io/p/ghk-cu) and [TB-500](https://pepbank.io/p/tb-500).
+
 ## Data and credit
 
 PepBank data is under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). When you show it, credit it as "Data from PepBank" with a link to [pepbank.io](https://pepbank.io). Each tool result gives a credit line to use. The files in this repository are under the MIT License.
@@ -127,6 +131,7 @@ PepBank data is under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 - [PepBank](https://pepbank.io)
 - [Developer guide and limits](https://pepbank.io/developers)
+- [Free account](https://pepbank.io/sign-in): higher daily limits, saved peptides and API keys
 - [Privacy](https://pepbank.io/privacy)
 - [Terms](https://pepbank.io/terms)
 - Support: [info@pepbank.io](mailto:info@pepbank.io)
