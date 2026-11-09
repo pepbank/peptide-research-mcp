@@ -3,7 +3,7 @@
   "name": "io.pepbank/pepbank",
   "title": "PepBank Peptide Research MCP: BPC-157, Retatrutide and Tirzepatide Studies and Trials",
   "description": "Studies and clinical trials for BPC-157, retatrutide, tirzepatide and 160+ peptides, with sources.",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "websiteUrl": "https://pepbank.io/developers",
   "repository": {
     "url": "https://github.com/pepbank/peptide-research-mcp",
@@ -23,6 +23,18 @@
       "sizes": [
         "any"
       ]
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "pepbank",
+      "version": "1.0.1",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      }
     }
   ],
   "remotes": [
