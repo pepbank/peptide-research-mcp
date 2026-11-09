@@ -1,0 +1,22 @@
+{
+  "name": "pepbank",
+  "displayName": "PepBank Peptide Research",
+  "version": "1.0.0",
+  "description": "Look up what studies found about BPC-157, retatrutide, tirzepatide, GHK-Cu, TB-500 and 160+ other peptides. Each result links to its paper and says if it came from people, animals or cells.",
+  "author": {
+    "name": "PepBank",
+    "url": "https://pepbank.io"
+  },
+  "homepage": "https://pepbank.io/developers",
+  "privacyPolicyUrl": "https://pepbank.io/privacy",
+  "repository": "https://github.com/pepbank/peptide-research-mcp",
+  "license": "MIT",
+  "keywords": [
+    "peptides",
+    "peptide-research",
+    "clinical-trials",
+    "pubmed",
+    "evidence",
+    "pepbank"
+  ]
+}

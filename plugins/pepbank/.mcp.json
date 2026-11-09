@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "pepbank": { "type": "http", "url": "https://pepbank.io/mcp/apps" }
+  }
+}
