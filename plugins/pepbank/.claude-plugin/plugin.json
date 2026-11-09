@@ -7,8 +7,11 @@
     "name": "PepBank",
     "url": "https://pepbank.io"
   },
-  "homepage": "https://pepbank.io/developers",
+  "homepage": "https://pepbank.io",
+  "documentationUrl": "https://pepbank.io/developers",
+  "supportUrl": "https://pepbank.io/contact",
   "privacyPolicyUrl": "https://pepbank.io/privacy",
+  "termsOfServiceUrl": "https://pepbank.io/terms",
   "icon": "./assets/icon.png",
   "repository": "https://github.com/pepbank/peptide-research-mcp",
   "license": "MIT",
