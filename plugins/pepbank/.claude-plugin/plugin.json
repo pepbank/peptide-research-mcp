@@ -9,6 +9,7 @@
   },
   "homepage": "https://pepbank.io/developers",
   "privacyPolicyUrl": "https://pepbank.io/privacy",
+  "icon": "./assets/icon.png",
   "repository": "https://github.com/pepbank/peptide-research-mcp",
   "license": "MIT",
   "keywords": [
